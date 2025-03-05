@@ -46,6 +46,7 @@ public class LancamentoControllerTest {
 	private FuncionarioService funcionarioService;
 	
 	private static final String URL_BASE = "/api/lancamentos/";
+	private static final String URL_CAD = "/api/lancamentos/launch";
 	private static final Long ID_EMPLOYEE = 1L;
 	private static final Long ID_LAUNCH = 1L;
 	private static final String TYPE = TipoEnum.START_WORK.name();
@@ -60,7 +61,7 @@ public class LancamentoControllerTest {
 		BDDMockito.given(this.funcionarioService.buscarPorId(Mockito.anyLong())).willReturn(Optional.of(new Funcionario()));
 		BDDMockito.given(this.lancamentoService.persitir(Mockito.any(Lancamento.class))).willReturn(lancamento);
 
-		mvc.perform(MockMvcRequestBuilders.post(URL_BASE)
+		mvc.perform(MockMvcRequestBuilders.post(URL_CAD)
 				.content(this.obterJsonRequisicaoPost())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -77,7 +78,7 @@ public class LancamentoControllerTest {
 	public void testCadastrarLancamentoFuncionarioIdInvalido() throws Exception {
 		BDDMockito.given(this.funcionarioService.buscarPorId(Mockito.anyLong())).willReturn(Optional.empty());
 
-		mvc.perform(MockMvcRequestBuilders.post(URL_BASE)
+		mvc.perform(MockMvcRequestBuilders.post(URL_CAD)
 				.content(this.obterJsonRequisicaoPost())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
