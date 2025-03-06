@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class LancamentoControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.data.id").value(ID_LAUNCH))
 				.andExpect(jsonPath("$.data.tipo").value(TYPE))
-				.andExpect(jsonPath("$.data.data").value(this.dateFormat.format(DATE)))
+				.andExpect(jsonPath("$.data.data").value(this.dateFormat.format(Date.from(Instant.now()))))
 				.andExpect(jsonPath("$.data.funcionarioId").value(ID_EMPLOYEE))
 				.andExpect(jsonPath("$.errors").isEmpty());
 	}

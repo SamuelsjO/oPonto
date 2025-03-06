@@ -1,10 +1,11 @@
 package com.samuelTI.smartpoint.api.entities;
 
 import com.samuelTI.smartpoint.api.enums.TipoEnum;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,6 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "lancamento")
 public class Lancamento implements Serializable{
@@ -30,7 +33,7 @@ public class Lancamento implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name = "data", nullable = false)
 	private Date data;
 	
@@ -52,75 +55,8 @@ public class Lancamento implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Funcionario funcionario;
-	
-	public Lancamento() {
-		
-	}
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getLocalizacao() {
-		return localizacao;
-	}
-
-	public void setLocalizacao(String localizacao) {
-		this.localizacao = localizacao;
-	}
-
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public Date getDataAtualizacao() {
-		return dataAtualizacao;
-	}
-
-	public void setDataAtualizacao(Date dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
-	}
-
-	public TipoEnum getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoEnum tipo) {
-		this.tipo = tipo;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
-	
 	@PreUpdate
 	public void preUpdate() {
 		dataAtualizacao = new Date();

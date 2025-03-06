@@ -1,11 +1,15 @@
 package com.samuelTI.smartpoint.api.controllers;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.samuelTI.smartpoint.api.enums.TipoEnum;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.EnumUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,29 +43,22 @@ import com.sun.xml.messaging.saaj.packaging.mime.internet.ParseException;
 @RestController
 @RequestMapping("/api/lancamentos")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class LancamentoController {
 
 	private static final Logger log = LoggerFactory.getLogger(LancamentoController.class);
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	@Autowired
-	private LancamentoService lancamentoService;
-
-	@Autowired
-	private FuncionarioService funcionarioService;
+	private final LancamentoService lancamentoService;
+	private final FuncionarioService funcionarioService;
 
 	@Value("${paginacao.qtd_por_pagina}")
 	private int qtdPorPagina;
 
-	public LancamentoController() {
 
-	}
 
 	/**
 	 * Returns the list of releases of an official.
-	 * 
-	 * @param funcionarioId
-	 * @param ResponseEntity<Response<CadastroLancamentoDto>>
+	 *
 	 */
 
 	@GetMapping(value = "/funcionario/{funcionarioId}")
@@ -84,9 +81,6 @@ public class LancamentoController {
 
 	/**
 	 * Returns a call by ID.
-	 * 
-	 * @param id
-	 * @param ResponseEntity<Response<CadastroLancamentoDto>>
 	 */
 
 	@GetMapping(value = "/{id}")
@@ -107,18 +101,16 @@ public class LancamentoController {
 
 	/**
 	 * Adds a new launch.
-	 * 
-	 * @param lancamento
-	 * @param result
-	 * @return ResponseEntity<Response<LancamentoDto>>
-	 * @throws java.text.ParseException 
-	 * @throws ParseException 
+	 *
 	 */
 	
 	@PostMapping(value="/launch")
 	public ResponseEntity<Response<CadastroLancamentoDto>> adicionar(@Valid @RequestBody CadastroLancamentoDto cadastroLancamentoDto,
 			BindingResult result) throws ParseException, java.text.ParseException{
 		log.info("Adicionando lancamento: {}", cadastroLancamentoDto.toString());
+
+		final var dates = Timestamp.valueOf(String.valueOf(Timestamp.from(Instant.now()))).toString();
+		cadastroLancamentoDto.setData(dates);
 		Response<CadastroLancamentoDto> response = new Response<CadastroLancamentoDto>();
 		validaFuncionario(cadastroLancamentoDto, result);
 		Lancamento lancamento = this.convertDtoByLancamento(cadastroLancamentoDto, result);
@@ -136,11 +128,7 @@ public class LancamentoController {
 	}
 	/**
 	 * Updates the data for a launch.
-	 * 
-	 * @param id
-	 * @param lancamentoDto
-	 * @return ResponseEntity<Response<Lancamento>>
-	 * @throws ParseException 
+	 *
 	 */
 
 	@PutMapping(value = "/{id}")
@@ -194,7 +182,6 @@ public class LancamentoController {
 	 * Converts an entity release to its respective DTO.
 	 * 
 	 * @param lancamento
-	 * @param CadastraLancamentoDto
 	 * 
 	 */
 
@@ -202,7 +189,7 @@ public class LancamentoController {
 		
 		CadastroLancamentoDto cadastroLancamentoDto = new CadastroLancamentoDto();
 		cadastroLancamentoDto.setId(Optional.of(lancamento.getId()));
-		cadastroLancamentoDto.setData(this.dateFormat.format(lancamento.getData()));
+		cadastroLancamentoDto.setData(this.dateFormat.format(Date.from(Instant.now())));
 		cadastroLancamentoDto.setTipo(lancamento.getTipo().toString());
 		cadastroLancamentoDto.setDescricao(lancamento.getDescricao());
 		cadastroLancamentoDto.setLocalizacao(lancamento.getLocalizacao());
@@ -216,7 +203,7 @@ public class LancamentoController {
 	 * Validate an official, verifying that it is existing and valid in the system.
 	 * 
 	 * @param result
-	 * @param CadastraLancamentoDto
+	 * @param cadastroLancamentoDto
 	 * 
 	 */
 
@@ -239,14 +226,12 @@ public class LancamentoController {
 	 * 
 	 * @param cadastroLancamentoDto
 	 * @param result
-	 * @param Lancamento
-	 * @param ParseExecption
-	 * @throws java.text.ParseException 
+	 * @throws java.text.ParseException
 	 * 
 	 */
 	
 	private Lancamento convertDtoByLancamento(CadastroLancamentoDto cadastroLancamentoDto, BindingResult result) throws ParseException, java.text.ParseException{
-		Lancamento lancamento = new Lancamento();
+		var lancamento = new Lancamento();
 		
 		if(cadastroLancamentoDto.getId().isPresent()) {
 			Optional<Lancamento> lanc = this.lancamentoService.buscarById(cadastroLancamentoDto.getId().get());
