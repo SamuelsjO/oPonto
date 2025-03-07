@@ -1,5 +1,10 @@
 package com.samuelTI.smartpoint.api.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -16,76 +21,30 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "empresa")
 public class Empresa implements Serializable{
 
 	private static final long serialVersionUID = 3500465487414732917L;
 
-	private Long id;
-	private String razaoSocial;
-	private String cnpj;
-	private Date dataCriacao;
-	private Date dataAtualizacao;
-	private List<Funcionario> funcionarios;
-	
-	public Empresa() {
-		
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	private Long id;
 	@Column(name = "razao_social", nullable = false)
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
-	}
-
+	private String razaoSocial;
 	@Column(name = "cnpj", nullable = false)
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
-
+	private String cnpj;
 	@Column(name = "data_criacao", nullable = false)
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public Date getDataAtualizacao() {
-		return dataAtualizacao;
-	}
-
+	private Date dataCriacao;
 	@Column(name = "data_atualizacao", nullable = false)
-	public void setDataAtualizacao(Date dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
-	}
-
+	private Date dataAtualizacao;
 	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public List<Funcionario> getFuncioarios() {
-		return funcionarios;
-	}
+	private List<Funcionario> funcionarios;
 
-	public void setFuncioarios(List<Funcionario> funcioarios) {
-		this.funcionarios = funcioarios;
-	}
 	
 	@PreUpdate
 	public void preUpdate() {

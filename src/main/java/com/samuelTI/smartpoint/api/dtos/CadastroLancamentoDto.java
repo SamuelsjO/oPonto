@@ -14,7 +14,7 @@ public class CadastroLancamentoDto {
 
 	private Optional<Long> id = Optional.empty();
 
-	private String data;
+	private String clockTime;
 	private String tipo;
 	private String descricao;
 	private String localizacao;
@@ -23,7 +23,7 @@ public class CadastroLancamentoDto {
 
 	@Override
 	public String toString() {
-		return "CadastroLancamentoDto [id=" + id + ", data=" + data + ", tipo=" + tipo + ", descricao=" + descricao
+		return "CadastroLancamentoDto [id=" + id + ", data=" + clockTime + ", tipo=" + tipo + ", descricao=" + descricao
 				+ ", localazicao=" + localizacao + ", funcionarioId=" + funcionarioId + "]";
 	}
 

@@ -23,7 +23,15 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.samuelTI.smartpoint.api.enums.PerfilEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "funcionario")
 public class Funcionario implements Serializable{
@@ -45,13 +53,16 @@ public class Funcionario implements Serializable{
 	
 	@Column(name = "cpf", nullable = false)
 	private String cpf;
-	
+
+	@Transient
 	@Column(name = "valor_Hora", nullable = true)
 	private BigDecimal valorHora;
-	
+
+	@Transient
 	@Column(name = "qtd_horas_trabalho_dia", nullable = true)
 	private Float qtdHorasTrabalhadas_dia;
-	
+
+	@Transient
 	@Column(name = "qtd_horas_almoco", nullable = true)
 	private Float qtdHorasAlmoco;
 	
@@ -70,79 +81,18 @@ public class Funcionario implements Serializable{
 	
 	@OneToMany(mappedBy = "funcionario" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Lancamento> lancamentos;
-	
-	public Funcionario() {
-		
-	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public BigDecimal getValorHora() {
-		return valorHora;
-	}
-	
 	@Transient
 	public Optional<BigDecimal> getValorHoraOpt(){
 		return Optional.ofNullable(valorHora);
 	}
 
-	public void setValorHora(BigDecimal valorHora) {
-		this.valorHora = valorHora;
-	}
 
 	@Transient
 	public Optional<Float> getQtdHorasTrabalhoDiaOpt(){
 		return Optional.ofNullable(qtdHorasTrabalhadas_dia);
 	}
-	public Float getQtdHorasTrabalhadas_dia() {
-		return qtdHorasTrabalhadas_dia;
-	}
 
-	public void setQtdHorasTrabalhadas_dia(Float qtHorasTrabalhadas_dia) {
-		this.qtdHorasTrabalhadas_dia = qtHorasTrabalhadas_dia;
-	}
-
-	public Float getQtdHorasAlmoco() {
-		return qtdHorasAlmoco;
-	}
 
 	public void setQtdHorasAlmoco(Float qtdHorasAlmoco) {
 		this.qtdHorasAlmoco = qtdHorasAlmoco;
@@ -153,46 +103,7 @@ public class Funcionario implements Serializable{
 		return Optional.ofNullable(qtdHorasAlmoco);
 	}
 
-	public PerfilEnum getPerfil() {
-		return perfil;
-	}
 
-	public void setPerfil(PerfilEnum perfil) {
-		this.perfil = perfil;
-	}
-
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public Date getDataAtualizacao() {
-		return dataAtualizacao;
-	}
-
-	public void setDataAtualizacao(Date dataAtualizacao) {
-		this.dataAtualizacao = dataAtualizacao;
-	}
-
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-	public List<Lancamento> getLancamentos() {
-		return lancamentos;
-	}
-
-	public void setLancamentos(List<Lancamento> lancamentos) {
-		this.lancamentos = lancamentos;
-	}
-	
 	@PreUpdate
 	public void preUpdate() {
 		dataAtualizacao = new Date();

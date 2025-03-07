@@ -69,7 +69,7 @@ public class LancamentoControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.data.id").value(ID_LAUNCH))
 				.andExpect(jsonPath("$.data.tipo").value(TYPE))
-				.andExpect(jsonPath("$.data.data").value(this.dateFormat.format(Date.from(Instant.now()))))
+				.andExpect(jsonPath("$.data.clockTime").value(this.dateFormat.format(Date.from(Instant.now()))))
 				.andExpect(jsonPath("$.data.funcionarioId").value(ID_EMPLOYEE))
 				.andExpect(jsonPath("$.errors").isEmpty());
 	}
@@ -111,7 +111,7 @@ public class LancamentoControllerTest {
 	private String obterJsonRequisicaoPost() throws JsonProcessingException {
 		CadastroLancamentoDto cadastrolancamentoDto = new CadastroLancamentoDto();
 		cadastrolancamentoDto.setId(null);
-		cadastrolancamentoDto.setData(this.dateFormat.format(DATE));
+		cadastrolancamentoDto.setClockTime(this.dateFormat.format(DATE));
 		cadastrolancamentoDto.setTipo(TYPE);
 		cadastrolancamentoDto.setFuncionarioId(ID_EMPLOYEE);
 		ObjectMapper mapper = new ObjectMapper();
@@ -121,7 +121,7 @@ public class LancamentoControllerTest {
 	private Lancamento obterDadosLancamento() {
 		Lancamento lancamento = new Lancamento();
 		lancamento.setId(ID_LAUNCH);
-		lancamento.setData(DATE);
+		lancamento.setClockTime(DATE);
 		lancamento.setTipo(TipoEnum.valueOf(TYPE));
 		lancamento.setFuncionario(new Funcionario());
 		lancamento.getFuncionario().setId(ID_EMPLOYEE);

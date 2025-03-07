@@ -77,7 +77,7 @@ public class LancamentoRepositoryTest {
 	
 	private Lancamento obterDadosLancamentos(Funcionario funcionario) {
 		Lancamento lancamento = new Lancamento();
-		lancamento.setData(new Date());
+		lancamento.setClockTime(new Date());
 		lancamento.setTipo(TipoEnum.START_LUNCH);
 		lancamento.setFuncionario(funcionario);
 		return lancamento;

@@ -1,7 +1,9 @@
 package com.samuelTI.smartpoint.api.entities;
 
 import com.samuelTI.smartpoint.api.enums.TipoEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -18,11 +20,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "lancamento")
 public class Lancamento implements Serializable{
@@ -32,10 +34,9 @@ public class Lancamento implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
 
-	@Column(name = "data", nullable = false)
-	private Date data;
+	@Column(name = "clock_time", nullable = false)
+	private Date clockTime;
 	
 	@Column(name = "descricao", nullable = true)
 	private String descricao;
@@ -70,7 +71,7 @@ public class Lancamento implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Lancamento [data=" + data + ", descricao=" + descricao + ", localizacao=" + localizacao
+		return "Lancamento [data=" + clockTime + ", descricao=" + descricao + ", localizacao=" + localizacao
 				+ ", dataCriacao=" + dataCriacao + ", dataAtualizacao=" + dataAtualizacao + ", tipo=" + tipo
 				+ ", funcionario=" + funcionario + "]";
 	}

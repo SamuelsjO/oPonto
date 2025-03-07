@@ -65,7 +65,7 @@ CREATE TABLE `funcionario` (
 
 CREATE TABLE `lancamento` (
   `id` bigint(20) NOT NULL,
-  `data` datetime NOT NULL,
+  `clock_time` datetime NOT NULL,
   `data_atualizacao` datetime NOT NULL,
   `data_criacao` datetime NOT NULL,
   `descricao` varchar(255) DEFAULT NULL,
