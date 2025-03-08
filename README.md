@@ -6,7 +6,7 @@ Endpoints da API
 
 1. Consultar lançamentos de um funcionário
 
-GET http://url_base/api/lancamentos/funcionario/{funcionarioId}?pag=0&ord=id&dir=DESC
+GET http://url_base/api/launches/customer/{funcionarioId}?pag=0&ord=id&dir=DESC
 
 Parâmetros:
 
@@ -52,7 +52,7 @@ Exemplo de Resposta:
 
 2. Criar um novo lançamento
 
-POST http://url_base/api/lancamentos/launch
+POST http://url_base/api/launches/launch
 
 Corpo da Requisição:
 
@@ -78,13 +78,13 @@ Exemplo de Resposta:
 "errors": []
 }
 
-3. Consultar empresa por CNPJ
+3. Consultar company por CNPJ
 
 GET http://url_base/api/empresas/cnpj/{cnpj}
 
 Parâmetros:
 
-cnpj (path variable): CNPJ da empresa.
+cnpj (path variable): CNPJ da company.
 
 Exemplo de Resposta:
 
